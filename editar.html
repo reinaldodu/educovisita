@@ -1,0 +1,94 @@
+<?php
+require_once("funciones.php");
+require_once("conexionBD.php");
+$link=conectarse();
+//****** Verificamos si existe la cookie *****/
+if(isset($_COOKIE['VisitaDatAdmin'])) {
+	if(isset($_GET['id'])) {
+		$resp=mysql_query(sprintf("select * from registro,visitas where md5(registro.id)=%s and registro.id_visita=visitas.id",comillas($_GET['id'])),$link);
+		        if ($row = mysql_fetch_array($resp)) {
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+   <title>Edición visita</title>
+      <link href="estilo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h2>EDICIÓN DE VISITA</h2>
+<form name="actualizar" action="editar.php" method="post">
+<table cellpadding="0" cellspacing="5" border="0">
+<thead><tr><th colspan="2">DATOS DEL VISITANTE</th></tr></thead>
+<tr>
+<td><label for="nom_vis">Nombres y apellidos:</label></td>
+<td><label for="nomvis"><?php echo ($row['nombres']." ".$row['apellidos'] ); ?></label></td>
+</tr>
+
+<tr>
+<td><label for="fecha_vis">Fecha:</label></td>
+<td><label for="fechavis"><?php echo ($row['fecha']); ?></label></td>
+</tr>
+
+<tr>
+<td><label for="hora_vis">Hora:</label></td>
+<td><label for="horavis"><?php echo ($row['hora']); ?></label></td>
+</tr>
+
+<tr>
+<td><label for="mot_vis">Motivo de ingreso:</label></td>
+<td><input type="text" name="mot_vis" value="<?php echo ($row['motivo']); ?>" size="50" maxlength="100"  title="Escriba el motivo" /></td>
+</tr>
+
+<tr>
+<td><label for="dep_vis">Dependencia a la que se dirige:</label></td>
+<td><select name="dep_vis" title="Seleccione la dependencia que visita.">
+<?php
+foreach($dependencias as $key=>$val) {	
+	if($row['id_dependencia']==$key) {	
+		echo '<option value="'.$key.'" selected>'.$val.'</option>';
+	}
+	else {
+		echo '<option value="'.$key.'">'.$val.'</option>';
+	}
+}
+?>
+</select></td></tr>
+
+<tr>
+<td><label for="rec_vis">Persona que visita:</label></td>
+<td><input type="text" name="rec_vis" value="<?php echo ($row['tarjeta']); ?>" size="20" maxlength="20"  title="Escriba el nombre de la persona que recibe la visita" /></td>
+</tr>
+
+<tr>
+<td><label for="tar_vis">No.Tarjeta asignado:</label></td>
+<td><input type="text" name="tar_vis" value="<?php echo ($row['tarjeta']); ?>" size="20" maxlength="20"  title="Escriba el # de tarjeta" /></td>
+</tr>
+
+<tr>
+<td><label for="obs_vis">Observaciones:</label></td>
+<td><input type="text" name="obs_vis" value="<?php echo ($row['observaciones']); ?>" size="50" maxlength="100"  title="Escriba las observaciones" /></td>
+</tr>
+
+</table><br />
+<input type="hidden" name="identificador" value="<?php echo ($_GET['id']); ?>" />
+<input type="hidden" name="doc_vis" value="<?php echo ($row['documento']); ?>" />
+<input type="hidden" name="date_vis" value="<?php echo ($row['fecha']); ?>" />
+<input type="hidden" name="time_vis" value="<?php echo ($row['hora']); ?>" />
+<div class="cen">
+<input type="submit" name="envia_actualizacion" value="Guardar datos" title="Guardar los datos" />
+</div></form>
+
+<?php
+}
+else {
+	echo '<table>';
+	echo '<tr><td class="cen" colspan="2"><strong>No hay datos para esta visita</strong></td></tr>';
+	echo '</table>';
+}
+echo '</body>';
+echo '</html>';
+}
+}
+mysql_close($link);
+?>

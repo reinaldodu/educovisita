@@ -1,0 +1,49 @@
+<?php
+//****** Verificamos si existe la cookie *****/
+if(isset($_COOKIE['VisitaDatAdmin'])) {
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+   <title>Configuración general</title>
+      <link href="estilo.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<form name="configuraciones" action="configuraciones.php" method="post">
+
+<h2>CONFIGURACIÓN GENERAL</h2>
+<?php
+echo '<div class="cen">';
+echo '| <strong><a href="categorias.php" title="Configurar dependencias">Configurar dependencias</a> | ';
+echo ' <strong><a href="registrados.php" title="Visitantes registrados en el sistema">Visitantes registrados</a> | ';
+echo '</div>';
+echo '<table cellpadding="0" cellspacing="5" border="0">';
+echo '<tr>';
+echo '<td><label for="institucion">Institución:</label></td>';
+echo '<td><input type="text" name="institucion" value="'.$leer['institucion'].'" size="50" maxlength="100" title="Escriba el nombre de la institución." /></td></tr>';
+
+echo '<tr>';
+echo '<td><label for="descripcion">Descripción:</label></td>';
+echo '<td><input type="text" name="descripcion" value="'.$leer['descripcion'].'" size="50" maxlength="100" title="Escriba la descripción" /></td></tr>';
+
+echo '<tr>';
+echo '<td><label for="activar">Activar foto:</label></td>';
+if ($leer['foto']=="S") {
+	echo '<td><input type="checkbox" name="activar" value="S" checked/></td>';
+}
+else {
+	echo '<td><input type="checkbox" name="activar" value="S"/></td>';
+}
+echo '</tr>';
+
+?>
+</table><br />
+<div class="cen">
+<input type="submit" name="envia_config" value="Guardar" title="Guardar los datos" />
+</div></form>
+
+</body>
+</html>
+<?php
+}
+?>

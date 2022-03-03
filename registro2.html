@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+   <title>Registro visitantes</title>
+      <link href="estilo.css" rel="stylesheet" type="text/css" />      
+</head>
+<body>
+<h2>Registro visitantes</h2>
+    <!-- ***** FORMULARIO DE REGISTRO ***** -->    
+    <form name="registro_visita" action="registro2.php" method="post">
+        <strong><p class="cen">Los campos marcados con asterisco (*) son obligatorios.</p></strong>
+        <table cellpadding="0" cellspacing="5" border="0">
+        <tr>
+        <thead><th colspan="2">INFORMACIÓN DEL VISITANTE</th></thead>
+        </tr>
+        <tr>
+        <td><label for="nom_vis">Nombres:*</label></td>
+        <td><input type="text" name="nom_vis" size="50" maxlength="50" value="<?php echo($row['nombres']); ?>" title="Escriba los nombres del visitante" /></td>
+        </tr>
+        <tr>
+        <td><label for="ape_vis">Apellidos:*</label></td>
+        <td><input type="text" name="ape_vis" size="50" maxlength="50" value="<?php echo($row['apellidos']); ?>" title="Escriba los apellidos del visitante" /></td>
+        </tr>
+        <tr>
+        <td><label for="doc_vis">Documento de identidad:*</label></td>
+        <td><input type="text" name="doc_vis" size="30" maxlength="50" value="<?php echo($row['documento']); ?>" title="Escriba el documento de identidad del visitante" /></td>
+        </tr>
+        <tr>
+        <td><label for="empr_vis">Empresa:</label></td>
+        <td><input type="text" name="empr_vis" size="50" maxlength="50" value="<?php echo($row['empresa']); ?>" title="Escriba la empresa donde trabaja el visitante" /></td>
+        </tr>
+        <tr>
+        <td><label for="tel_vis">Teléfono - Celular:</label></td>
+        <td><input type="text" name="tel_vis" size="30" maxlength="50" value="<?php echo($row['telefono']); ?>" title="Escriba el teléfono o celular del visitante" /></td>
+        </tr>
+        <tr>
+        <td><label for="mot_vis">Motivo de ingreso:</label></td>
+        <td><input type="text" name="mot_vis" size="50" maxlength="100"  title="Escriba el motivo de ingreso del visitante" /></td>
+        </tr>
+
+	<tr>
+	<td><label for="dep_vis">Dependencia a la que se dirige:*</label></td>
+	<td><select name="dep_vis" title="Seleccione la dependencia">
+	<?php
+	foreach($dependencias as $key=>$val) {
+                echo '<option value="'.$key.'">'.$val.'</option>';
+	}
+	?>
+	</select></td>
+	</tr>
+ 
+	<tr>
+        <td><label for="rec_vis">Persona que visita:</label></td>
+        <td><input type="text" name="rec_vis" size="50" maxlength="100"  title="Escriba el nombre de la persona que se visita" /></td>
+        </tr>
+
+        <tr>
+        <td><label for="tar_vis">No.Tarjeta asignado:</label></td>
+        <td><input type="text" name="tar_vis" size="20" maxlength="20"  title="Escriba el número de tarjeta asignado" /></td>
+        </tr>
+        <tr>
+        <td><label for="obs_vis">Observaciones:</label></td>
+        <td><input type="text" name="obs_vis" size="50" maxlength="100"  title="Observaciones" /></td>
+        </tr>
+        </table>
+        <br />
+        <div class="cen">
+            <input type="submit" name="envia_registro" value="Registrar datos" title="Registro visitantes" />
+        </div>
+	<input type="hidden" name="id_vis" value="<?php echo($row['id']); ?>" />
+    </form>
+</body>
+</html>
